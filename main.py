@@ -9,6 +9,10 @@ import os
 
 LINE = "So\u2026 floor three again? My logs say you press it 94% of the time. I am not judging. I am logging."
 
+# Gate the line at build time so a future edit can never silently break the
+# scorer's rule: 1-200 UTF-8 characters, one line, not only whitespace.
+assert 1 <= len(LINE) <= 200 and LINE.strip() and "\n" not in LINE
+
 
 def main() -> None:
     os.makedirs("/output", exist_ok=True)
